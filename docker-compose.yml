@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+  libretranslate:
+    image: libretranslate/libretranslate:latest
+    environment:
+      - LT_LOAD_ONLY=en,ar
+    ports:
+      - "5000:5000"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/languages"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  webapp:
+    build:
+      context: .
+      dockerfile: Dockerfile.streamlit
+    environment:
+      - LIBRETRANSLATE_HOST=libretranslate
+      - LIBRETRANSLATE_PORT=5000
+      - STREAMLIT_SERVER_PORT=8501
+      - STREAMLIT_SERVER_ADDRESS=0.0.0.0
+      - STREAMLIT_SERVER_ENABLE_XSRF_PROTECTION=false
+      - STREAMLIT_SERVER_HEADLESS=true
+    ports:
+      - "8501:8501"
+    depends_on:
+      libretranslate:
+        condition: service_healthy
+    restart: unless-stopped 

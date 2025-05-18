@@ -185,44 +185,22 @@ Used inside `app.py` for UI interaction.
 ## File/Folder Structure
 
 ```
-chatbot_mvp/
-├── app.py                 # Streamlit app
-├── translator.py          # LibreTranslate functions
-├── detector.py            # Language detection
-├── knowledge_base.py      # Dummy Q&A or search logic
-├── requirements.txt       # Streamlit + requests
-├── docker-compose.yml     # For LibreTranslate
-└── data/
-    └── kb.json            # Simple JSON-based Q&A
+octopus-ai-mvp/
+├── chatbot_mvp
+│   ├── __pycache__
+│   │   ├── detector.cpython-312.pyc
+│   │   ├── knowledge_base.cpython-312.pyc
+│   │   └── translator.cpython-312.pyc
+│   ├── app.py
+│   ├── data
+│   │   └── kb.json
+│   ├── detector.py
+│   ├── docker-compose.yml
+│   ├── Dockerfile
+│   ├── knowledge_base.py
+│   ├── requirements.txt
+│   └── translator.py
+├── instructions
+│   └── instructions.md
+└── README.md
 ```
-
-```
-
-Comprehensive Analysis of AI Octopus: Features, Functions, and Opportunities for Innovation
-AI Octopus is a comprehensive social media management and CRM platform that leverages artificial intelligence to help businesses streamline customer interactions, centralize social media management, and build stronger customer relationships. This analysis explores the company's core offerings and identifies key pain points that could be addressed through technological innovation.
-
-Company Overview and Core Business Functions
-AI Octopus positions itself as an all-in-one solution for businesses seeking to enhance their social media presence and customer relationship management capabilities. The platform is built on artificial intelligence technologies designed to help businesses convert visitors into loyal customers through automated, intelligent interactions.
-
-Primary Platform Capabilities
-AI Octopus offers a centralized dashboard for managing multiple social media channels simultaneously. This integration allows businesses to monitor all their social media touchpoints from a single interface, eliminating the need to switch between different applications. The platform supports major social media channels including WhatsApp, Twitter, and Facebook, providing businesses with a unified view of their social media presence.
-
-The core of AI Octopus's offering is its smart response system. Using artificial intelligence, the platform can automatically engage with customers through chatbots that aim to deliver personalized, contextual responses. This automated system is designed to function around the clock, providing what the company describes as a "24/7/365 superstar market watchdog".
-
-Key Features and Functionalities
-The AI Octopus platform includes several distinctive features designed to enhance business operations:
-
-Automated Response System
-The platform utilizes artificial intelligence response technology coupled with machine learning to deliver contextual responses to customer inquiries without human intervention. This system is designed to understand customer intent and provide appropriate responses automatically.
-
-Intelligent Complaint Tagging
-AI Octopus implements an automated routing system that tags and directs customer complaints to the appropriate department or personnel for prompt resolution. This feature aims to streamline the customer service workflow and ensure that issues are addressed efficiently.
-
-Customer Acquisition and Retention Tools
-The platform provides tools designed to convert casual visitors into customers and build a base of loyal patrons. By centralizing social media management and customer interactions, AI Octopus helps businesses implement consistent engagement strategies across channels.
-
-Real-Time Monitoring and Response
-AI Octopus enables businesses to track mentions of their brand across social media platforms and respond rapidly to customer comments, concerns, or inquiries. This capability is marketed as essential for reputation management and customer relationship building.
-
-Analytics and Insights
-The platform offers analytical capabilities to help businesses understand customer behavior and preferences, which can inform product development and marketing strategies. By capturing and analyzing customer mentions, AI Octopus provides data-driven insights for business decision-making.

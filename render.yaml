@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: octopus-ai-mvp
+    name: chatbot-mvp
     env: docker
     dockerfilePath: ./Dockerfile
     plan: free
@@ -13,4 +13,8 @@ services:
       - key: STREAMLIT_SERVER_HEADLESS
         value: "true"
       - key: STREAMLIT_SERVER_ADDRESS
-        value: "0.0.0.0" 
+        value: "0.0.0.0"
+      - key: LIBRETRANSLATE_HOST
+        value: "localhost"
+      - key: LIBRETRANSLATE_PORT
+        value: "5000" 

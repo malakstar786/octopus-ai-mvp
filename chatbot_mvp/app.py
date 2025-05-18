@@ -56,7 +56,7 @@ def main():
         st.warning("""
         ⚠️ LibreTranslate service is not available. 
         
-        Please make sure LibreTranslate is running at http://localhost:5001.
+        Please make sure LibreTranslate is running at http://localhost:5000.
         
         Arabic translation will not work until LibreTranslate is available.
         See README.md for setup instructions.
