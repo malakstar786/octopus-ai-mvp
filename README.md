@@ -19,7 +19,7 @@ pip install -r requirements.txt
 
 ### 2. Set Up LibreTranslate
 
-#### Option A: Using Docker (Recommended)
+Using Docker
 
 1. Install Docker if not already installed:
    - [Docker Desktop for Mac](https://docs.docker.com/desktop/install/mac-install/)
@@ -36,19 +36,6 @@ pip install -r requirements.txt
    docker-compose up -d
    ```
 
-#### Option B: Using Python (Alternative)
-
-1. Install LibreTranslate from PyPI:
-   ```bash
-   pip install libretranslate
-   ```
-
-2. Run LibreTranslate:
-   ```bash
-   libretranslate --host 0.0.0.0 --port 5000 --load-only en,ar
-   ```
-
-LibreTranslate will be available at http://localhost:5000. The first run will take some time as it downloads the language models.
 
 ### 3. Run the Streamlit App
 
