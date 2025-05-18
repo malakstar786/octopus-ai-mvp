@@ -27,5 +27,12 @@ COPY .streamlit ./.streamlit
 # Expose Streamlit port
 EXPOSE 7860
 
+# Set environment variables
+ENV LIBRETRANSLATE_HOST="localhost"
+ENV LIBRETRANSLATE_PORT="5001"
+
+# Expose both LibreTranslate and Streamlit ports
+EXPOSE 5001 7860
+
 # Start LibreTranslate in the background, then Streamlit
-CMD bash -c "cd /libretranslate && python3 app.py & cd /app && streamlit run app.py --server.port 7860 --server.enableXsrfProtection false"
+CMD bash -c "cd /libretranslate && python3 app.py --host 0.0.0.0 --port 5001 & cd /app && streamlit run app.py --server.port 7860 --server.enableXsrfProtection false"

@@ -7,7 +7,8 @@ import os
 # Use environment variable if set (for containerized environments),
 # otherwise fall back to localhost (for local development)
 LIBRETRANSLATE_HOST = os.environ.get("LIBRETRANSLATE_HOST", "localhost")
-LIBRETRANSLATE_URL = f"http://{LIBRETRANSLATE_HOST}:5000/translate"
+LIBRETRANSLATE_PORT = os.environ.get("LIBRETRANSLATE_PORT", "5001")
+LIBRETRANSLATE_URL = f"http://{LIBRETRANSLATE_HOST}:{LIBRETRANSLATE_PORT}/translate"
 
 def check_libretranslate_connection():
     """
@@ -18,14 +19,14 @@ def check_libretranslate_connection():
     """
     try:
         # Try to connect to LibreTranslate
-        response = requests.get(f"http://{LIBRETRANSLATE_HOST}:5000/languages")
+        response = requests.get(f"http://{LIBRETRANSLATE_HOST}:{LIBRETRANSLATE_PORT}/languages")
         return response.status_code == 200
     except requests.exceptions.ConnectionError:
-        print(f"Could not connect to LibreTranslate at {LIBRETRANSLATE_HOST}:5000")
+        print(f"Could not connect to LibreTranslate at {LIBRETRANSLATE_HOST}:{LIBRETRANSLATE_PORT}")
         # Try localhost as a fallback if we're not already using it
         if LIBRETRANSLATE_HOST != "localhost":
             try:
-                response = requests.get("http://localhost:5000/languages")
+                response = requests.get(f"http://localhost:{LIBRETRANSLATE_PORT}/languages")
                 return response.status_code == 200
             except:
                 pass

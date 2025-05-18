@@ -29,12 +29,13 @@ RUN echo '[server]\nenableXsrfProtection = false' > .streamlit/config.toml
 
 # Set environment variables
 ENV LIBRETRANSLATE_HOST="localhost"
+ENV LIBRETRANSLATE_PORT="5001"
 
 # Expose required ports
-EXPOSE 5000 7860
+EXPOSE 5001 7860
 
 # Download LibreTranslate models - based on confirmed working command format
 RUN libretranslate --update-models --load-only en,ar
 
 # Start LibreTranslate in the background, then the Streamlit app
-CMD bash -c "libretranslate --host 0.0.0.0 --port 5000 --load-only en,ar & streamlit run app.py --server.port 7860 --server.enableXsrfProtection false"
+CMD bash -c "libretranslate --host 0.0.0.0 --port 5001 --load-only en,ar & streamlit run app.py --server.port 7860 --server.enableXsrfProtection false"
