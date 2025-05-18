@@ -5,7 +5,7 @@ A lightweight chatbot MVP that detects a user's language (Arabic or English), pr
 ## Features
 
 - Automatic language detection (Arabic/English)
-- Seamless translation using LibreTranslate
+- Seamless translation using LibreTranslate (open-source language translation)
 - Simple knowledge base for customer support queries
 - Clean chat interface built with Streamlit
 
