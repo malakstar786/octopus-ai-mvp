@@ -3,7 +3,7 @@ import json
 import time
 
 # LibreTranslate endpoint
-LIBRETRANSLATE_URL = "http://localhost:5000/translate"
+LIBRETRANSLATE_URL = "http://0.0.0.0:5000/translate"
 
 def check_libretranslate_connection():
     """
@@ -14,7 +14,7 @@ def check_libretranslate_connection():
     """
     try:
         # Try to connect to LibreTranslate
-        response = requests.get("http://localhost:5000/languages")
+        response = requests.get("http://0.0.0.0:5000/languages")
         return response.status_code == 200
     except requests.exceptions.ConnectionError:
         return False
