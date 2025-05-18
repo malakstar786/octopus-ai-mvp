@@ -9,7 +9,7 @@ pinned: false
 ---
 
 
-# Multilingual AI Chatbot MVP
+# Multilingual AI Chatbot MVP for Octopus AI
 
 A lightweight chatbot MVP that detects a user's language (Arabic or English), processes queries, and responds in the original language.
 
