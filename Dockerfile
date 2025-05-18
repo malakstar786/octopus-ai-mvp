@@ -27,11 +27,15 @@ COPY chatbot_mvp/data/ ./data/
 RUN mkdir -p .streamlit
 RUN echo '[server]\nenableXsrfProtection = false' > .streamlit/config.toml
 
+# Set environment variables
+ENV LIBRETRANSLATE_HOST="localhost"
+
 # Expose required ports
 EXPOSE 5000 7860
 
-# Download LibreTranslate models for English and Arabic
-RUN libretranslate --update-models --install-models en ar
+# Download LibreTranslate models - specify to load only English and Arabic
+# Use the correct flag format
+RUN libretranslate --update-models --load-only en,ar
 
 # Start LibreTranslate in the background, then the Streamlit app
-CMD bash -c "libretranslate --host 0.0.0.0 --port 5000 & streamlit run app.py --server.port 7860 --server.enableXsrfProtection false"
+CMD bash -c "libretranslate --host 0.0.0.0 --port 5000 --load-only en,ar & streamlit run app.py --server.port 7860 --server.enableXsrfProtection false"

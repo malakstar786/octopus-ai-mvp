@@ -1,9 +1,13 @@
 import requests
 import json
 import time
+import os
 
 # LibreTranslate endpoint
-LIBRETRANSLATE_URL = "http://0.0.0.0:5000/translate"
+# Use environment variable if set (for containerized environments),
+# otherwise fall back to localhost (for local development)
+LIBRETRANSLATE_HOST = os.environ.get("LIBRETRANSLATE_HOST", "localhost")
+LIBRETRANSLATE_URL = f"http://{LIBRETRANSLATE_HOST}:5000/translate"
 
 def check_libretranslate_connection():
     """
@@ -14,9 +18,17 @@ def check_libretranslate_connection():
     """
     try:
         # Try to connect to LibreTranslate
-        response = requests.get("http://0.0.0.0:5000/languages")
+        response = requests.get(f"http://{LIBRETRANSLATE_HOST}:5000/languages")
         return response.status_code == 200
     except requests.exceptions.ConnectionError:
+        print(f"Could not connect to LibreTranslate at {LIBRETRANSLATE_HOST}:5000")
+        # Try localhost as a fallback if we're not already using it
+        if LIBRETRANSLATE_HOST != "localhost":
+            try:
+                response = requests.get("http://localhost:5000/languages")
+                return response.status_code == 200
+            except:
+                pass
         return False
 
 def translate_text(text, source, target, max_retries=3):
