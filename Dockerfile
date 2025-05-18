@@ -33,8 +33,7 @@ ENV LIBRETRANSLATE_HOST="localhost"
 # Expose required ports
 EXPOSE 5000 7860
 
-# Download LibreTranslate models - specify to load only English and Arabic
-# Use the correct flag format
+# Download LibreTranslate models - based on confirmed working command format
 RUN libretranslate --update-models --load-only en,ar
 
 # Start LibreTranslate in the background, then the Streamlit app
