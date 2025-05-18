@@ -7,7 +7,7 @@ import os
 # Use environment variable if set (for containerized environments),
 # otherwise fall back to localhost (for local development)
 LIBRETRANSLATE_HOST = os.environ.get("LIBRETRANSLATE_HOST", "localhost")
-LIBRETRANSLATE_PORT = os.environ.get("LIBRETRANSLATE_PORT", "5001")
+LIBRETRANSLATE_PORT = os.environ.get("LIBRETRANSLATE_PORT", "5000")  # LibreTranslate's default port
 LIBRETRANSLATE_URL = f"http://{LIBRETRANSLATE_HOST}:{LIBRETRANSLATE_PORT}/translate"
 
 def check_libretranslate_connection():

@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: chatbot-mvp
+    name: octopus-ai-mvp
     env: docker
     dockerfilePath: ./Dockerfile
     plan: free
@@ -8,13 +8,9 @@ services:
     envVars:
       - key: PYTHONUNBUFFERED
         value: "true"
-      - key: LIBRETRANSLATE_HOST
-        value: "localhost" # Runs in the same container
-      - key: LIBRETRANSLATE_PORT
-        value: "5001"
-      # PORT is automatically set by Render for the web service.
-      # The Dockerfile CMD uses ${PORT} for Streamlit.
       - key: STREAMLIT_SERVER_ENABLE_XSRF_PROTECTION 
-        value: "false" # Matches Dockerfile CMD and .streamlit/config.toml
+        value: "false"
       - key: STREAMLIT_SERVER_HEADLESS
-        value: "true" # Good for server environments, matches .streamlit/config.toml 
+        value: "true"
+      - key: STREAMLIT_SERVER_ADDRESS
+        value: "0.0.0.0" 
