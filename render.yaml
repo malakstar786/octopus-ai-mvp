@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: chatbot-mvp
+    env: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    autoDeploy: true
+    envVars:
+      - key: PYTHONUNBUFFERED
+        value: "true"
+      - key: LIBRETRANSLATE_HOST
+        value: "localhost" # Runs in the same container
+      - key: LIBRETRANSLATE_PORT
+        value: "5001"
+      # PORT is automatically set by Render for the web service.
+      # The Dockerfile CMD uses ${PORT} for Streamlit.
+      - key: STREAMLIT_SERVER_ENABLE_XSRF_PROTECTION 
+        value: "false" # Matches Dockerfile CMD and .streamlit/config.toml
+      - key: STREAMLIT_SERVER_HEADLESS
+        value: "true" # Good for server environments, matches .streamlit/config.toml 
