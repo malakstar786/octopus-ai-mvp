@@ -1,36 +1,64 @@
 {
   "questions": [
     {
-      "keywords": ["shipping", "delivery", "days", "time"],
+      "keywords": ["shipping", "delivery", "days", "time", "ship", "deliver", "sent", "send", "arrival", "arrive"],
       "answer": "Shipping usually takes 3-5 business days."
     },
     {
-      "keywords": ["return", "policy", "exchange"],
+      "keywords": ["return", "policy", "exchange", "back", "refund", "returns", "give back", "go back", "sent back", "send back", "العودة", "ارجاع"],
       "answer": "Our return policy allows returns within 30 days of purchase with original receipt."
     },
     {
-      "keywords": ["payment", "methods", "pay", "accept"],
+      "keywords": ["payment", "methods", "pay", "accept", "credit card", "debit card", "transaction", "money"],
       "answer": "We accept Visa, Mastercard, PayPal, and bank transfers."
     },
     {
-      "keywords": ["contact", "support", "help", "service"],
+      "keywords": ["contact", "support", "help", "service", "assistance", "customer service", "reach", "call", "email", "phone"],
       "answer": "You can contact our support team at support@example.com or call +1-800-123-4567."
     },
     {
-      "keywords": ["price", "cost", "expensive", "cheap"],
+      "keywords": ["price", "cost", "expensive", "cheap", "pricing", "fee", "charge", "value", "worth", "affordable"],
       "answer": "Our pricing varies by product. Please check the product page for specific pricing information."
     },
     {
-      "keywords": ["order", "status", "track", "package"],
+      "keywords": ["order", "status", "track", "package", "shipment", "tracking", "locate", "find", "whereabouts", "location"],
       "answer": "You can track your order status by logging into your account or using the tracking number provided in your confirmation email."
     },
     {
-      "keywords": ["discount", "coupon", "promo", "code"],
+      "keywords": ["discount", "coupon", "promo", "code", "offer", "deal", "promotion", "sale", "savings", "voucher"],
       "answer": "We regularly offer promotional discounts. Sign up for our newsletter to receive coupon codes."
     },
     {
-      "keywords": ["warranty", "guarantee"],
+      "keywords": ["warranty", "guarantee", "protection", "coverage", "repair", "replace", "fix", "broken", "damage", "defect"],
       "answer": "Our products come with a 1-year warranty covering manufacturing defects."
+    },
+    {
+      "keywords": ["octopus", "ai octopus", "platform", "ai", "artificial intelligence", "chatbot", "bot"],
+      "answer": "AI Octopus is a comprehensive social media management and CRM platform that leverages artificial intelligence to help businesses streamline customer interactions, centralize social media management, and build stronger customer relationships."
+    },
+    {
+      "keywords": ["social media", "channels", "facebook", "twitter", "whatsapp", "instagram", "platform", "media"],
+      "answer": "AI Octopus offers a centralized dashboard for managing multiple social media channels including WhatsApp, Twitter, and Facebook from a single interface, eliminating the need to switch between different applications."
+    },
+    {
+      "keywords": ["features", "functions", "capabilities", "what can", "what does", "functionality", "do"],
+      "answer": "AI Octopus features include: automated responses, intelligent complaint tagging, customer acquisition tools, real-time monitoring, and analytics for data-driven insights."
+    },
+    {
+      "keywords": ["automated", "response", "replies", "automatic", "auto", "robot", "smart response", "intelligent", "auto reply"],
+      "answer": "The platform utilizes artificial intelligence response technology coupled with machine learning to deliver contextual responses to customer inquiries without human intervention."
+    },
+    {
+      "keywords": ["complaint", "tag", "tagging", "route", "routing", "direct", "department", "ticket", "issue", "problem"],
+      "answer": "AI Octopus implements an automated routing system that tags and directs customer complaints to the appropriate department or personnel for prompt resolution."
+    },
+    {
+      "keywords": ["monitor", "monitoring", "track", "tracking", "real-time", "realtime", "real time", "mentions", "brand"],
+      "answer": "AI Octopus enables businesses to track mentions of their brand across social media platforms and respond rapidly to customer comments, concerns, or inquiries."
+    },
+    {
+      "keywords": ["analytics", "insights", "data", "statistics", "metrics", "trends", "reports", "reporting", "analysis"],
+      "answer": "The platform offers analytical capabilities to help businesses understand customer behavior and preferences, which can inform product development and marketing strategies."
     }
   ],
   "default_response": "I'm sorry, I don't have information about that. Please contact our customer support for assistance."

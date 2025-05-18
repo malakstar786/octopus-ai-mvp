@@ -15,14 +15,18 @@ def handle_query(input_text):
         input_text (str): User's input text
         
     Returns:
-        tuple: (original_language, english_query, original_response, translated_response)
+        tuple: (original_language, original_query, english_query, english_response, translated_response)
     """
+    # Keep the original query
+    original_query = input_text
+    
     # Detect language
     lang = detect_language(input_text)
     
     # Translate to English if needed
     if lang == 'ar':
         english_query = translate_text(input_text, 'ar', 'en')
+        print(f"Translated query from Arabic to English: '{input_text}' -> '{english_query}'")
     else:
         english_query = input_text
     
@@ -32,10 +36,11 @@ def handle_query(input_text):
     # Translate back to original language if needed
     if lang == 'ar':
         translated_response = translate_text(english_response, 'en', 'ar')
+        print(f"Translated response from English to Arabic: '{english_response}' -> '{translated_response}'")
     else:
         translated_response = english_response
     
-    return lang, english_query, english_response, translated_response
+    return lang, original_query, english_query, english_response, translated_response
 
 # Set up the Streamlit app
 def main():
@@ -51,7 +56,7 @@ def main():
         st.warning("""
         ⚠️ LibreTranslate service is not available. 
         
-        Please make sure LibreTranslate is running at http://localhost:5000.
+        Please make sure LibreTranslate is running at http://localhost:5001.
         
         Arabic translation will not work until LibreTranslate is available.
         See README.md for setup instructions.
@@ -84,19 +89,18 @@ def main():
         
         # Process the query
         with st.spinner("Thinking..."):
-            lang, english_query, english_response, translated_response = handle_query(user_input)
+            lang, original_query, english_query, english_response, translated_response = handle_query(user_input)
             
-            # Display bot response
+            # Display bot response based on the original language
             if lang == 'ar':
-                # For Arabic queries, show both English and Arabic responses
-                st.chat_message('assistant').write(f"🤖 {english_response}")
-                st.chat_message('assistant').write(f"🤖 (Arabic): {translated_response}")
+                # For Arabic, only show the Arabic response (don't show English)
+                response_text = translated_response
+                st.chat_message('assistant').write(f"🤖 {response_text}")
                 
-                # Store both responses in chat history
-                st.session_state.messages.append({'role': 'assistant', 'content': english_response})
-                st.session_state.messages.append({'role': 'assistant', 'content': f"(Arabic): {translated_response}"})
+                # Store only the Arabic response in chat history
+                st.session_state.messages.append({'role': 'assistant', 'content': response_text})
             else:
-                # For English queries, just show English response
+                # For English, just show the English response
                 st.chat_message('assistant').write(f"🤖 {english_response}")
                 
                 # Store response in chat history

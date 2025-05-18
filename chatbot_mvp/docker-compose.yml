@@ -4,7 +4,7 @@ services:
     image: libretranslate/libretranslate
     restart: always
     ports:
-      - "5000:5000"
+      - "5001:5000"
     environment:
       - LT_UPDATE_MODELS=true
       - LT_LOAD_ONLY=en,ar

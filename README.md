@@ -28,10 +28,27 @@ pip install -r requirements.txt
 
 2. Run LibreTranslate with Docker:
    ```bash
-   docker compose up -d
+   docker run -d -p 5000:5000 libretranslate/libretranslate
    ```
 
-   This will start LibreTranslate on http://localhost:5001. The first run will take some time as it downloads the language models.
+   Or with docker-compose:
+   ```bash
+   docker-compose up -d
+   ```
+
+#### Option B: Using Python (Alternative)
+
+1. Install LibreTranslate from PyPI:
+   ```bash
+   pip install libretranslate
+   ```
+
+2. Run LibreTranslate:
+   ```bash
+   libretranslate --host 0.0.0.0 --port 5000 --load-only en,ar
+   ```
+
+LibreTranslate will be available at http://localhost:5000. The first run will take some time as it downloads the language models.
 
 ### 3. Run the Streamlit App
 
@@ -72,6 +89,6 @@ Edit the `data/kb.json` file to add more questions and answers to the knowledge 
 
 If you encounter connection issues with LibreTranslate:
 
-1. Verify LibreTranslate is running by visiting http://localhost:5001 in your browser
-2. Check if the correct ports are exposed (5001)
-3. If port 5001 is already in use, you can change it in both docker-compose.yml and translator.py 
+1. Verify LibreTranslate is running by visiting http://localhost:5000 in your browser
+2. Check if the correct ports are exposed (5000)
+3. If using Option B (Python), ensure you have sufficient RAM for the language models 

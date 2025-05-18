@@ -1,5 +1,6 @@
 import json
 import os
+import re
 
 class KnowledgeBase:
     def __init__(self, kb_file='data/kb.json'):
@@ -30,6 +31,7 @@ class KnowledgeBase:
     def get_answer(self, query):
         """
         Search for an answer in the knowledge base based on keywords in the query.
+        Uses a more sophisticated matching algorithm to handle translations better.
         
         Args:
             query (str): The user's query (in English)
@@ -37,16 +39,57 @@ class KnowledgeBase:
         Returns:
             str: The answer from the knowledge base or default response
         """
+        if not query or query.strip() == "":
+            return self.default_response
+            
         # Convert query to lowercase for case-insensitive matching
         query = query.lower()
         
-        # Look for keyword matches in the query
+        # Store matches with their score
+        matches = []
+        
+        # Clean query of punctuation for better matching
+        cleaned_query = re.sub(r'[^\w\s]', ' ', query)
+        query_words = cleaned_query.split()
+        
+        # Process each QA pair
         for qa_pair in self.questions:
             keywords = qa_pair.get('keywords', [])
+            score = 0
             
-            # Check if any keyword is in the query
-            if any(keyword.lower() in query for keyword in keywords):
-                return qa_pair.get('answer')
+            # Check for exact matches (highest priority)
+            for keyword in keywords:
+                keyword_lower = keyword.lower()
+                if keyword_lower in query:
+                    # Exact match gets a high score
+                    score += 10
+                    break
+            
+            # If no exact match, check for word-by-word matches
+            if score == 0:
+                for query_word in query_words:
+                    if len(query_word) <= 2:  # Skip very short words
+                        continue
+                        
+                    for keyword in keywords:
+                        keyword_lower = keyword.lower()
+                        keyword_parts = keyword_lower.split()
+                        
+                        # Check if the query word is in any of the keyword parts
+                        if query_word in keyword_parts or any(query_word in kp for kp in keyword_parts):
+                            score += 1
+                        # Check if the keyword is in the query word (partial match)
+                        elif len(keyword_lower) > 2 and keyword_lower in query_word:
+                            score += 1
+            
+            if score > 0:
+                matches.append((score, qa_pair.get('answer')))
         
-        # Return default response if no match is found
+        # Sort matches by score (highest first)
+        matches.sort(reverse=True)
+        
+        # Return the answer with the highest score, or default if no matches
+        if matches:
+            return matches[0][1]
+        
         return self.default_response 
