@@ -19,17 +19,36 @@ def check_libretranslate_connection():
     """
     try:
         # Try to connect to LibreTranslate
+        print(f"Trying to connect to LibreTranslate at {LIBRETRANSLATE_HOST}:{LIBRETRANSLATE_PORT}")
         response = requests.get(f"http://{LIBRETRANSLATE_HOST}:{LIBRETRANSLATE_PORT}/languages")
         return response.status_code == 200
     except requests.exceptions.ConnectionError:
         print(f"Could not connect to LibreTranslate at {LIBRETRANSLATE_HOST}:{LIBRETRANSLATE_PORT}")
-        # Try localhost as a fallback if we're not already using it
-        if LIBRETRANSLATE_HOST != "localhost":
+        
+        # Try multiple fallbacks if the main host fails
+        fallbacks = [
+            "localhost",  # Try localhost 
+            "127.0.0.1",  # Try loopback IP
+            "0.0.0.0",    # Try all interfaces
+            "libretranslate"  # Try Docker service name
+        ]
+        
+        # Only try fallbacks that aren't the same as what we already tried
+        fallbacks = [host for host in fallbacks if host != LIBRETRANSLATE_HOST]
+        
+        for fallback_host in fallbacks:
             try:
-                response = requests.get(f"http://localhost:{LIBRETRANSLATE_PORT}/languages")
-                return response.status_code == 200
+                print(f"Trying fallback: {fallback_host}:{LIBRETRANSLATE_PORT}")
+                response = requests.get(f"http://{fallback_host}:{LIBRETRANSLATE_PORT}/languages")
+                if response.status_code == 200:
+                    print(f"Successfully connected to fallback: {fallback_host}:{LIBRETRANSLATE_PORT}")
+                    # Update the global URL to use the working fallback
+                    global LIBRETRANSLATE_URL
+                    LIBRETRANSLATE_URL = f"http://{fallback_host}:{LIBRETRANSLATE_PORT}/translate"
+                    return True
             except:
-                pass
+                print(f"Fallback connection failed: {fallback_host}")
+                
         return False
 
 def translate_text(text, source, target, max_retries=3):
