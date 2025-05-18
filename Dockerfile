@@ -6,10 +6,9 @@ RUN apt-get update && apt-get install -y \
     libffi-dev libjpeg-dev libpng-dev libopenblas-dev liblapack-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Install pip packages with increased timeout
+# Upgrade pip tools
 RUN pip install --upgrade pip setuptools wheel
 
-# Install LibreTranslate dependencies in groups using proper quoting
 # Group 1: Base & PyTorch
 RUN pip install --no-cache-dir --timeout=600 torch==2.2.0
 RUN pip install --no-cache-dir appdirs==1.4.4 apscheduler==3.9.1 requests==2.31.0 'numpy<2' packaging==23.1
@@ -23,7 +22,7 @@ RUN pip install --no-cache-dir flask==2.2.5 flask-babel==3.1.0 flask-limiter==2.
 RUN pip install --no-cache-dir argos-translate-files==1.2.0 argostranslate==1.9.6 \
     langdetect==1.0.9 lexilang==1.0.4 morfessor==2.0.6 polib==1.1.1 \
     translatehtml==1.5.2 sentencepiece==0.2.0
-    
+
 RUN pip install --no-cache-dir 'ctranslate2<5,>=4.0'
 
 # Group 4: Remaining dependencies
@@ -32,31 +31,28 @@ RUN pip install --no-cache-dir expiringdict==1.2.2 prometheus-client==0.15.0 red
 # Install LibreTranslate
 RUN pip install --no-cache-dir libretranslate
 
-# Work directory for your app
+# Set work directory
 WORKDIR /app
 
-# Copy requirements first for better caching
+# Install Python requirements
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy your app files
+# Copy app source code
 COPY . .
 
-# Set Streamlit config
+# Configure Streamlit
 RUN mkdir -p ~/.streamlit
 RUN mkdir -p .streamlit
 COPY .streamlit/config.toml .streamlit/config.toml
 
-# Expose ports for both services
+# Expose common ports (local dev only)
 EXPOSE 5000 8501
 
-# Environment variables for LibreTranslate connection
-ENV LIBRETRANSLATE_HOST=0.0.0.0
-ENV LIBRETRANSLATE_PORT=5000
-ENV STREAMLIT_SERVER_PORT=8501
-ENV STREAMLIT_SERVER_ADDRESS=0.0.0.0
+# Environment variables (STREAMLIT picks up these automatically)
 ENV STREAMLIT_SERVER_ENABLE_XSRF_PROTECTION=false
 ENV STREAMLIT_SERVER_HEADLESS=true
+ENV STREAMLIT_SERVER_ADDRESS=0.0.0.0
 
-# Run LibreTranslate + Streamlit at runtime
-CMD ["sh", "-c", "libretranslate --host 0.0.0.0 --port 5000 --update-models --load-only en,ar & streamlit run chatbot_mvp/app.py --server.port=8501 --server.address=0.0.0.0"]
+# FINAL FIXED CMD for RENDER
+CMD ["sh", "-c", "libretranslate --host 0.0.0.0 --port 5000 --update-models --load-only en,ar & exec streamlit run chatbot_mvp/app.py --server.port=$PORT --server.address=0.0.0.0"]

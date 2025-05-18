@@ -14,7 +14,7 @@ services:
         value: "true"
       - key: STREAMLIT_SERVER_ADDRESS
         value: "0.0.0.0"
-      - key: LIBRETRANSLATE_HOST
-        value: "0.0.0.0"
       - key: LIBRETRANSLATE_PORT
-        value: "5000" 
+        value: "5000"
+      - key: PORT
+        value: "10000"
