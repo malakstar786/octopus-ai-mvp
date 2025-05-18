@@ -1,3 +1,14 @@
+---
+title: Multilingual AI Chatbot MVP
+emoji: "🤖"
+colorFrom: indigo
+colorTo: blue
+sdk: docker
+app_file: app.py
+pinned: false
+---
+
+
 # Multilingual AI Chatbot MVP
 
 A lightweight chatbot MVP that detects a user's language (Arabic or English), processes queries, and responds in the original language.
