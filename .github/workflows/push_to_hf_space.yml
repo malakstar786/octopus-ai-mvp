@@ -17,5 +17,5 @@ jobs:
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "actions@github.com"
-          git remote add hf https://malakstar786:${HF_TOKEN}@hhuggingface.co/spaces/Merpec/octopus-multilingual-mvp
+          git remote add hf https://malakstar786:${HF_TOKEN}@huggingface.co/spaces/Merpec/octopus-multilingual-mvp
           git push hf main --force
