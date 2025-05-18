@@ -2,12 +2,17 @@ import requests
 import json
 import time
 import os
+import sys
 
 # LibreTranslate endpoint
 # Always use localhost for internal container communication
 LIBRETRANSLATE_HOST = "localhost"  # Fixed to localhost for internal communication
 LIBRETRANSLATE_PORT = os.environ.get("LIBRETRANSLATE_PORT", "5000")  # LibreTranslate's default port
 LIBRETRANSLATE_URL = f"http://{LIBRETRANSLATE_HOST}:{LIBRETRANSLATE_PORT}/translate"
+
+# Print connection details on startup
+print(f"[TRANSLATOR] Configured to connect to LibreTranslate at: {LIBRETRANSLATE_URL}", file=sys.stderr)
+print(f"[TRANSLATOR] Environment variables: PORT={os.environ.get('PORT')}, LIBRETRANSLATE_PORT={os.environ.get('LIBRETRANSLATE_PORT')}", file=sys.stderr)
 
 def check_libretranslate_connection():
     """
@@ -18,11 +23,15 @@ def check_libretranslate_connection():
     """
     try:
         # Try to connect to LibreTranslate
-        print(f"Trying to connect to LibreTranslate at {LIBRETRANSLATE_HOST}:{LIBRETRANSLATE_PORT}")
-        response = requests.get(f"http://{LIBRETRANSLATE_HOST}:{LIBRETRANSLATE_PORT}/languages")
+        print(f"[TRANSLATOR] Trying to connect to LibreTranslate at {LIBRETRANSLATE_HOST}:{LIBRETRANSLATE_PORT}", file=sys.stderr)
+        response = requests.get(f"http://{LIBRETRANSLATE_HOST}:{LIBRETRANSLATE_PORT}/languages", timeout=5)
+        print(f"[TRANSLATOR] Connection successful: {response.status_code}", file=sys.stderr)
         return response.status_code == 200
-    except requests.exceptions.ConnectionError:
-        print(f"Could not connect to LibreTranslate at {LIBRETRANSLATE_HOST}:{LIBRETRANSLATE_PORT}")
+    except requests.exceptions.ConnectionError as e:
+        print(f"[TRANSLATOR] Connection error to LibreTranslate at {LIBRETRANSLATE_HOST}:{LIBRETRANSLATE_PORT}: {e}", file=sys.stderr)
+        return False
+    except Exception as e:
+        print(f"[TRANSLATOR] Unexpected error connecting to LibreTranslate: {e}", file=sys.stderr)
         return False
 
 def translate_text(text, source, target, max_retries=3):
@@ -57,6 +66,7 @@ def translate_text(text, source, target, max_retries=3):
             }
             
             # Send request to LibreTranslate
+            print(f"[TRANSLATOR] Attempt {attempt+1}: Sending translation request to {LIBRETRANSLATE_URL}", file=sys.stderr)
             response = requests.post(LIBRETRANSLATE_URL, json=data, timeout=10)
             
             # Check if request was successful
@@ -64,16 +74,16 @@ def translate_text(text, source, target, max_retries=3):
                 result = response.json()
                 return result["translatedText"]
             else:
-                print(f"Translation error (attempt {attempt+1}/{max_retries}): {response.text}")
+                print(f"[TRANSLATOR] Translation error (attempt {attempt+1}/{max_retries}): {response.text}", file=sys.stderr)
                 if attempt < max_retries - 1:
                     # Wait before retrying
                     time.sleep(1)
         except Exception as e:
-            print(f"Translation error (attempt {attempt+1}/{max_retries}): {str(e)}")
+            print(f"[TRANSLATOR] Translation error (attempt {attempt+1}/{max_retries}): {str(e)}", file=sys.stderr)
             if attempt < max_retries - 1:
                 # Wait before retrying
                 time.sleep(1)
     
     # Return original text if all attempts fail
-    print(f"Translation failed after {max_retries} attempts. Returning original text.")
+    print(f"[TRANSLATOR] Translation failed after {max_retries} attempts. Returning original text.", file=sys.stderr)
     return text 

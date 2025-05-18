@@ -54,5 +54,5 @@ ENV STREAMLIT_SERVER_ENABLE_XSRF_PROTECTION=false
 ENV STREAMLIT_SERVER_HEADLESS=true
 ENV STREAMLIT_SERVER_ADDRESS=0.0.0.0
 
-# FINAL FIXED CMD for RENDER
-CMD ["sh", "-c", "libretranslate --host 0.0.0.0 --port 5000 --update-models --load-only en,ar & exec streamlit run chatbot_mvp/app.py --server.port=$PORT --server.address=0.0.0.0"]
+# FIXED CMD - without exec to ensure both processes run correctly
+CMD ["sh", "-c", "libretranslate --host 0.0.0.0 --port 5000 --update-models --load-only en,ar & sleep 10 && streamlit run chatbot_mvp/app.py --server.port=$PORT --server.address=0.0.0.0"]

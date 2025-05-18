@@ -1,7 +1,12 @@
 import streamlit as st
+import sys
+import os
 from detector import detect_language
 from translator import translate_text, check_libretranslate_connection
 from knowledge_base import KnowledgeBase
+
+# Debug environment
+print(f"[APP] Starting with environment variables: PORT={os.environ.get('PORT')}, LIBRETRANSLATE_PORT={os.environ.get('LIBRETRANSLATE_PORT')}", file=sys.stderr)
 
 # Initialize the knowledge base
 kb = KnowledgeBase()
@@ -26,7 +31,7 @@ def handle_query(input_text):
     # Translate to English if needed
     if lang == 'ar':
         english_query = translate_text(input_text, 'ar', 'en')
-        print(f"Translated query from Arabic to English: '{input_text}' -> '{english_query}'")
+        print(f"[APP] Translated query from Arabic to English: '{input_text}' -> '{english_query}'", file=sys.stderr)
     else:
         english_query = input_text
     
@@ -36,7 +41,7 @@ def handle_query(input_text):
     # Translate back to original language if needed
     if lang == 'ar':
         translated_response = translate_text(english_response, 'en', 'ar')
-        print(f"Translated response from English to Arabic: '{english_response}' -> '{translated_response}'")
+        print(f"[APP] Translated response from English to Arabic: '{english_response}' -> '{translated_response}'", file=sys.stderr)
     else:
         translated_response = english_response
     
@@ -50,7 +55,9 @@ def main():
     st.title("Multilingual AI Chatbot MVP")
     
     # Check LibreTranslate connection
+    print("[APP] Checking LibreTranslate connection...", file=sys.stderr)
     libretranslate_available = check_libretranslate_connection()
+    print(f"[APP] LibreTranslate available: {libretranslate_available}", file=sys.stderr)
     
     if not libretranslate_available:
         st.warning("""
