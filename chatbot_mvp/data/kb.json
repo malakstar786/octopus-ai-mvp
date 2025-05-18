@@ -1,0 +1,37 @@
+{
+  "questions": [
+    {
+      "keywords": ["shipping", "delivery", "days", "time"],
+      "answer": "Shipping usually takes 3-5 business days."
+    },
+    {
+      "keywords": ["return", "policy", "exchange"],
+      "answer": "Our return policy allows returns within 30 days of purchase with original receipt."
+    },
+    {
+      "keywords": ["payment", "methods", "pay", "accept"],
+      "answer": "We accept Visa, Mastercard, PayPal, and bank transfers."
+    },
+    {
+      "keywords": ["contact", "support", "help", "service"],
+      "answer": "You can contact our support team at support@example.com or call +1-800-123-4567."
+    },
+    {
+      "keywords": ["price", "cost", "expensive", "cheap"],
+      "answer": "Our pricing varies by product. Please check the product page for specific pricing information."
+    },
+    {
+      "keywords": ["order", "status", "track", "package"],
+      "answer": "You can track your order status by logging into your account or using the tracking number provided in your confirmation email."
+    },
+    {
+      "keywords": ["discount", "coupon", "promo", "code"],
+      "answer": "We regularly offer promotional discounts. Sign up for our newsletter to receive coupon codes."
+    },
+    {
+      "keywords": ["warranty", "guarantee"],
+      "answer": "Our products come with a 1-year warranty covering manufacturing defects."
+    }
+  ],
+  "default_response": "I'm sorry, I don't have information about that. Please contact our customer support for assistance."
+} 
